@@ -53,6 +53,17 @@ func (vals *Values) Add(label string, value interface{}) *Values {
 	return vals
 }
 
+// Append adds multiple values to Values.
+func (vals *Values) Append(args ...interface{}) *Values {
+	if len(args)%2 == 1 {
+		panic("Append require even args")
+	}
+	for i := 0; i+1 < len(args); i += 2 {
+		vals.Add(fmt.Sprint(args[i]), args[i+1])
+	}
+	return vals
+}
+
 // WriteTo writes LTSV string to io.Writer
 func (vals Values) WriteTo(w io.Writer) (int64, error) {
 	b := make([]byte, 0, 1024)
