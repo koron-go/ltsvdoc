@@ -112,6 +112,19 @@ func (pv *ProxyValue) Error() error {
 	return pv.err
 }
 
+// Bool returns a bool value
+func (pv *ProxyValue) Bool() bool {
+	if pv.err != nil {
+		return false
+	}
+	v, err := strconv.ParseBool(pv.v.ValueString())
+	if err != nil {
+		pv.setErr(fmt.Errorf("label:%q failed to parse as bool: %s", pv.l, err))
+		return false
+	}
+	return v
+}
+
 // String returns a string value.
 func (pv *ProxyValue) String() string {
 	if pv.err != nil {
@@ -144,4 +157,17 @@ func (pv *ProxyValue) Int32() int32 {
 		return 0
 	}
 	return int32(n)
+}
+
+// Float64 returns a float64 value.
+func (pv *ProxyValue) Float64() float64 {
+	if pv.err != nil {
+		return 0
+	}
+	f, err := strconv.ParseFloat(pv.v.ValueString(), 64)
+	if err != nil {
+		pv.setErr(fmt.Errorf("label:%q failed to parse as float64: %s", pv.l, err))
+		return 0
+	}
+	return f
 }
