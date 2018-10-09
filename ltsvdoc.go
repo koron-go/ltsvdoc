@@ -32,6 +32,11 @@ func (v LabelValue) ValueString() string {
 	return q[1 : len(q)-1]
 }
 
+// RawValueString return value in string form without any quotes.
+func (v LabelValue) RawValueString() string {
+	return fmt.Sprint(v.Value)
+}
+
 // Values is an array of LabelValue
 type Values []*LabelValue
 

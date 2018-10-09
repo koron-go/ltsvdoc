@@ -117,7 +117,7 @@ func (pv *ProxyValue) Bool() bool {
 	if pv.err != nil {
 		return false
 	}
-	v, err := strconv.ParseBool(pv.v.ValueString())
+	v, err := strconv.ParseBool(pv.v.RawValueString())
 	if err != nil {
 		pv.setErr(fmt.Errorf("label:%q failed to parse as bool: %s", pv.l, err))
 		return false
@@ -130,7 +130,7 @@ func (pv *ProxyValue) String() string {
 	if pv.err != nil {
 		return ""
 	}
-	return pv.v.ValueString()
+	return pv.v.RawValueString()
 }
 
 // Int64 returns a int64 value.
@@ -138,7 +138,7 @@ func (pv *ProxyValue) Int64() int64 {
 	if pv.err != nil {
 		return 0
 	}
-	n, err := strconv.ParseInt(pv.v.ValueString(), 10, 64)
+	n, err := strconv.ParseInt(pv.v.RawValueString(), 10, 64)
 	if err != nil {
 		pv.setErr(fmt.Errorf("label:%q can't be parsed as int64: %s", pv.l, err))
 		return 0
@@ -151,7 +151,7 @@ func (pv *ProxyValue) Int32() int32 {
 	if pv.err != nil {
 		return 0
 	}
-	n, err := strconv.ParseInt(pv.v.ValueString(), 10, 32)
+	n, err := strconv.ParseInt(pv.v.RawValueString(), 10, 32)
 	if err != nil {
 		pv.setErr(fmt.Errorf("label:%q can't be parsed as int32: %s", pv.l, err))
 		return 0
@@ -164,7 +164,7 @@ func (pv *ProxyValue) Float64() float64 {
 	if pv.err != nil {
 		return 0
 	}
-	f, err := strconv.ParseFloat(pv.v.ValueString(), 64)
+	f, err := strconv.ParseFloat(pv.v.RawValueString(), 64)
 	if err != nil {
 		pv.setErr(fmt.Errorf("label:%q failed to parse as float64: %s", pv.l, err))
 		return 0

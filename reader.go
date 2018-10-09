@@ -63,7 +63,7 @@ func (r *Reader) Read() (Values, error) {
 		}
 		vals = append(vals, &LabelValue{
 			Label: string(kv[0]),
-			Value: string(kv[1]),
+			Value: parseValue(string(kv[1])),
 		})
 	}
 	return vals, nil

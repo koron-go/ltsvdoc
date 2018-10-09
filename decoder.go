@@ -34,7 +34,7 @@ func (d Decoder) Decode() (Unmarshaler, error) {
 	if first.Label != "t" {
 		return nil, fmt.Errorf(`first value should have label "t": %q`, first.Label)
 	}
-	n := first.ValueString()
+	n := first.RawValueString()
 	um, ok := d.reg.newUnmarshaler(n)
 	if !ok {
 		return nil, fmt.Errorf("unsupported type: %s", n)
