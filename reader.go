@@ -30,7 +30,8 @@ func (r *Reader) readLine() ([]byte, error) {
 	} else if err != bufio.ErrBufferFull {
 		return nil, err
 	}
-	bb := bytes.NewBuffer(d)
+	bb := &bytes.Buffer{}
+	bb.Write(d)
 	for {
 		d2, err := r.rd.ReadSlice('\n')
 		if len(d2) > 0 {
