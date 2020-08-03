@@ -12,7 +12,7 @@ type Proxy struct {
 	errors []error
 }
 
-// Proxy represents a proxy for LabelValue.
+// ProxyValue represents a proxy for LabelValue.
 type ProxyValue struct {
 	p   *Proxy
 	l   string

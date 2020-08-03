@@ -6,7 +6,7 @@ import (
 )
 
 func parseValue(s string) interface{} {
-	if strings.IndexAny(s, "\\") < 0 {
+	if !strings.ContainsAny(s, "\\") {
 		return s
 	}
 	t, _ := strconv.Unquote(s)

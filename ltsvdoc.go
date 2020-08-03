@@ -1,3 +1,6 @@
+/*
+Package ltsvdoc provides LTSV marshaller and unmarshaller and its utilities.
+*/
 package ltsvdoc
 
 import (
@@ -25,7 +28,7 @@ func NewLabelValue(label string, value interface{}) *LabelValue {
 // ValueString get a string representation of value.
 func (v LabelValue) ValueString() string {
 	s := fmt.Sprint(v.Value)
-	if strings.IndexAny(s, "\t\n\\") < 0 {
+	if !strings.ContainsAny(s, "\t\n\\") {
 		return s
 	}
 	q := strconv.Quote(s)
