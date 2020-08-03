@@ -3,6 +3,7 @@ package ltsvdoc_test
 import (
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
 	"github.com/koron-go/ltsvdoc"
 )
 
@@ -56,5 +57,36 @@ t:foo	value:zzz
 `
 	if s != exp {
 		t.Fatalf("unexpected EncodeAll: %q", s)
+	}
+}
+
+type testData interface {
+	ltsvdoc.Marshaler
+	ltsvdoc.Unmarshaler
+}
+
+func TestVarious(t *testing.T) {
+	for ti, tc := range []struct {
+		obj testData
+		str string
+	}{
+		{&Foo{"aaa"}, "t:foo\tvalue:aaa\n"},
+		{&Foo{"a\\b"}, "t:foo\tvalue:a\\\\b\n"},
+	} {
+		b, err := ltsvdoc.EncodeAll(tc.obj)
+		if err != nil {
+			t.Fatalf("encode failed #%d: %s", ti, err)
+		}
+		act, exp := string(b), tc.str
+		if act != exp {
+			t.Fatalf("ltsv not match #%d:\nwant=%q\n got=%q", ti, exp, act)
+		}
+		vals, err := ltsvdoc.DecodeAll([]byte(exp))
+		if err != nil {
+			t.Fatalf("decode failed #%d: %s", ti, err)
+		}
+		if diff := cmp.Diff([]ltsvdoc.Unmarshaler{tc.obj}, vals); diff != "" {
+			t.Fatalf("decoded vals mismatch #%d: -want +got\n%s", ti, diff)
+		}
 	}
 }

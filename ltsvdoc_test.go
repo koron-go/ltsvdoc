@@ -19,7 +19,7 @@ func (p *Foo) UnmarshalLTSV(vals ltsvdoc.Values) error {
 	for _, v := range vals {
 		switch v.Label {
 		case "value":
-			p.Value = v.ValueString()
+			p.Value = v.RawValueString()
 		default:
 			return fmt.Errorf("unknown label: %q", v.Label)
 		}
